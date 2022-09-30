@@ -1,6 +1,11 @@
 //write include statements
 
+#include<iostream>
+
 //write using statements
+
+using std::cin;
+using std::cout;
 
 
 /*
