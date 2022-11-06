@@ -5,6 +5,7 @@
 int main() 
 {
 	TicTacToe game;
+	string winner;
 	string first_player;
 	char end = 'N';
 	int position;
@@ -21,9 +22,11 @@ int main()
 			game.mark_board(position);
 		}
 		game.display_board();
+		winner = game.get_winner();
+		if (winner == "C") cout << "Tie game!";
+		else cout<<"The winner is "<<winner<<"!";
 		cout<<"\nExit program? (Y/N): ";
 		cin>>end;
 	} while(end != 'Y');
 	return 0;
 }
-
