@@ -1,42 +1,69 @@
-//main
+#include <iostream>
 #include "tic_tac_toe.h"
 #include "tic_tac_toe_manager.h"
+#include "tic_tac_toe_3.h"
+#include "tic_tac_toe_4.h"
 
+using std::cout;
+using std::cin;
+using std::make_unique;
 
-int main() 
+int main()
 {
-	TicTacToe game;
-	TicTacToeManager manager;
-	string winner;
-	string first_player;
-	
-	char end;
-	int position;
-	cout << "Tic-Tac-Toe Time!\n";
-	cout << "Moves you can make:\n1|2|3\n4|5|6\n7|8|9\n";
-	do {
-		cout<<"Player 1 choose X or O: ";
-		cin>>first_player;
-		game.start_game(first_player);
-		while (!game.game_over()) {
-			cout<<game;
-			cin>>game;
-		}
-		cout<<game;
+    unique_ptr<TicTacToe> game;
+    TicTacToeManager manager;
 
-		manager.save_game(game);
-		int x, o, t;
-		manager.get_winner_total(x, o, t);
-		cout<<"\nX wins: "<<x<<"\n";
-    	cout<<"O wins: "<<o<<"\n";
-    	cout<<"(Lame) Ties: "<<t<<"\n";
+    string first_player;
+    string select;
 
-		winner = game.get_winner();
-		if (winner == "C") cout << "Tie game!";
-		else cout<<"The winner is "<<winner<<"!";
-		cout<<"\nExit program? (Y/N): ";
-		cin>>end;
-	} while(end != 'Y');
-	cout<<manager;
-	return 0;
+    do{
+        string game_selection;
+        do
+        {
+            cout << "Enter 3 for classic TicTacToe!\nEnter 4 for 4x4 TicTacToe madness!\n";
+            cin >> game_selection;
+        }
+        while(game_selection != "3" && game_selection != "4");
+
+        if (game_selection == "3")
+        {
+            game = make_unique<TicTacToe3>();
+        }
+        else
+        {
+            game = make_unique<TicTacToe4>();
+        }
+
+        cout << "Player One: Choose X or O\n";
+        cin >> first_player;
+
+        if (first_player == "X" || first_player == "O")
+        {
+            game->start_game(first_player);
+
+            do
+            {
+                cout << *game;
+                cin >> *game;
+            }
+            while (!game->game_over());
+
+            manager.save_game(game);
+
+            int x, o, t;
+            manager.get_winner_totals(x,o,t);
+            cout << "\nX Wins: " << x << "\n";
+            cout << "O Wins: " << o << "\n";
+            cout << "Ties: " << t << "\n";
+
+            cout << "Would you like to play again? (Y/N)\n";
+            cin >> select;
+        }
+        else
+        {
+            cout << "Invalid selection.";
+        }
+    }while(select != "N");
+    cout<<manager;
+    return 0;
 }
