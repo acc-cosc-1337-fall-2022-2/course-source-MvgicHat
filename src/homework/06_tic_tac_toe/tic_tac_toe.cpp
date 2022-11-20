@@ -51,18 +51,6 @@ string TicTacToe::get_player() const{
     return player;
 }
 
-//void TicTacToe::display_board() const{
-//    for(int i=0; i < pegs.size(); i++){
-//        cout << pegs[i];
-//        if(i == 2 || i == 5 || i ==8){
-//            cout<<'\n';
-//        }
-//        else{
-//            cout<<"|";
-//        }
-//    }
-//}
-
 void TicTacToe::set_next_player(){
     if(player == "X")
     {
@@ -92,8 +80,6 @@ void TicTacToe::clear_board(){
         pegs[i] = " ";
     };
 }
-
-///HW7 updates
 
 string TicTacToe::get_winner(){
     return winner;
